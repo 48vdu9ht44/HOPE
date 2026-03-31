@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Project HOPE — Self Awareness Initiative</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red:#FF4757; --orange:#FF6B35; --yellow:#FFD93D; --green:#6BCB77;
+  --blue:#4D96FF; --purple:#C77DFF; --pink:#FF6B9D; --teal:#4ECDC4; --dark:#2D2D44;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:#FFF9F0;color:var(--dark);overflow-x:hidden;}
+
+.shapes-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.shape{position:absolute;border-radius:50%;opacity:.06;animation:floatShape 8s ease-in-out infinite;}
+@keyframes floatShape{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-30px) rotate(15deg);}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-bottom:3px solid var(--yellow);box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.nav-logo{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--red);letter-spacing:2px;}
+.nav-logo span{color:var(--orange);}
+.nav-links{display:flex;gap:.5rem;list-style:none;}
+.nav-links a{color:var(--dark);text-decoration:none;font-size:.85rem;font-weight:700;padding:.4rem .9rem;border-radius:20px;transition:all .2s;}
+.nav-links a:hover{background:var(--yellow);}
+.nav-cta{background:var(--red);color:#fff;padding:.5rem 1.2rem;border-radius:25px;font-size:.85rem;font-weight:800;text-decoration:none;box-shadow:0 4px 12px rgba(255,71,87,.35);transition:transform .2s;}
+.nav-cta:hover{transform:scale(1.05);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 4rem;background:linear-gradient(160deg,#FFF0F3 0%,#FFF9E6 40%,#F0F8FF 100%);position:relative;overflow:hidden;}
+.star{position:absolute;font-size:1.5rem;animation:twinkle 3s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.3;transform:scale(1);}50%{opacity:1;transform:scale(1.2);}}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--yellow);color:var(--dark);font-size:.8rem;font-weight:800;letter-spacing:1px;padding:.5rem 1.2rem;border-radius:25px;margin-bottom:1.5rem;box-shadow:0 4px 12px rgba(255,217,61,.4);animation:bounceIn .8s ease both;}
+@keyframes bounceIn{0%{opacity:0;transform:scale(.5);}70%{transform:scale(1.05);}100%{opacity:1;transform:scale(1);}}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(3.5rem,10vw,7rem);line-height:1;letter-spacing:2px;animation:slideUp .8s ease .1s both;}
+.h{color:var(--red);} .o{color:var(--orange);} .p{color:var(--blue);} .e{color:var(--green);}
+.hero-full{font-family:'Fredoka One',cursive;font-size:clamp(1rem,2.5vw,1.3rem);color:#888;margin-top:.4rem;letter-spacing:1px;}
+.hero-tagline{font-size:clamp(1rem,2.5vw,1.2rem);color:#555;font-weight:600;max-width:580px;line-height:1.6;margin:1.5rem auto 0;animation:slideUp .8s ease .2s both;}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+.hero-row{display:flex;align-items:center;justify-content:center;gap:3rem;margin:3rem 0;flex-wrap:wrap;animation:slideUp .8s ease .3s both;}
+.msg-bubble{background:#fff;border-radius:20px;padding:1.2rem 1.5rem;box-shadow:0 8px 24px rgba(0,0,0,.08);margin-bottom:1rem;max-width:280px;}
+.msg-bubble.safe{border-left:4px solid var(--green);}
+.msg-bubble.danger{border-left:4px solid var(--red);}
+.bubble-icon{font-size:1.5rem;margin-bottom:.4rem;}
+.bubble-title{font-weight:800;font-size:.9rem;margin-bottom:.2rem;}
+.bubble-text{font-size:.8rem;color:#666;line-height:1.5;}
+.right-bubbles{align-items:flex-end;display:flex;flex-direction:column;}
+.right-bubbles .msg-bubble{border-left:none;border-right:4px solid var(--blue);}
+.right-bubbles .msg-bubble:last-child{border-right-color:var(--purple);}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:slideUp .8s ease .4s both;}
+.btn{padding:.9rem 2.2rem;border-radius:30px;font-size:1rem;font-weight:800;text-decoration:none;transition:all .2s;font-family:'Nunito',sans-serif;}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4);}
+.btn-red:hover{transform:translateY(-3px);}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 6px 20px rgba(77,150,255,.4);}
+.btn-blue:hover{transform:translateY(-3px);}
+
+.stats-strip{background:var(--dark);padding:2rem 3rem;display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;}
+.s-stat{text-align:center;}
+.s-num{font-family:'Fredoka One',cursive;font-size:2.5rem;line-height:1;}
+.s-label{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-top:.2rem;}
+
+.sec{padding:5rem 2rem;position:relative;}
+.sec-inner{max-width:1100px;margin:0 auto;}
+.sec-tag{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.3rem .8rem;border-radius:20px;margin-bottom:1rem;}
+.sec-title{font-family:'Fredoka One',cursive;font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin-bottom:1rem;}
+.sec-body{font-size:1rem;color:#666;line-height:1.7;max-width:600px;font-weight:600;}
+
+/* PROBLEM */
+.prob-sec{background:linear-gradient(135deg,#FFF5F5 0%,#FFF0F8 100%);}
+.prob-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2.5rem;}
+.prob-card{background:#fff;border-radius:20px;padding:1.8rem;box-shadow:0 8px 24px rgba(0,0,0,.06);transition:transform .2s;border-top:5px solid;}
+.prob-card:hover{transform:translateY(-5px);}
+.prob-card:nth-child(1){border-color:var(--red);}
+.prob-card:nth-child(2){border-color:var(--orange);}
+.prob-card:nth-child(3){border-color:var(--purple);}
+.prob-card:nth-child(4){border-color:var(--pink);}
+.prob-emoji{font-size:2.5rem;margin-bottom:.8rem;}
+.prob-title{font-weight:800;font-size:1rem;margin-bottom:.5rem;}
+.prob-desc{font-size:.85rem;color:#666;line-height:1.6;}
+.prob-big{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--red);margin-top:.8rem;}
+.prob-sub{font-size:.75rem;color:#999;font-weight:700;}
+
+/* SOLUTION */
+.sol-sec{background:#F0F8FF;}
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem;}
+.comp-card{border-radius:24px;padding:2rem;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:transform .2s;position:relative;}
+.comp-card:hover{transform:translateY(-8px) rotate(-1deg);}
+.comp-card.c-red{background:linear-gradient(135deg,#FFE8E8,#FFF5F5);border:2px solid rgba(255,71,87,.2);}
+.comp-card.c-blue{background:linear-gradient(135deg,#E8F0FF,#F0F8FF);border:2px solid rgba(77,150,255,.2);}
+.comp-card.c-green{background:linear-gradient(135deg,#E8FFE8,#F0FFF4);border:2px solid rgba(107,203,119,.2);}
+.comp-icon{font-size:4rem;margin-bottom:1rem;display:block;animation:wiggle 3s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+.comp-name{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:.4rem;}
+.c-red .comp-name{color:var(--red);}
+.c-blue .comp-name{color:var(--blue);}
+.c-green .comp-name{color:var(--green);}
+.comp-sub{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:1rem;}
+.comp-desc{font-size:.85rem;color:#555;line-height:1.6;font-weight:600;}
+.comp-feats{margin-top:1.2rem;display:flex;flex-direction:column;gap:.5rem;text-align:left;}
+.feat{display:flex;align-items:center;gap:.6rem;font-size:.8rem;font-weight:700;color:#444;background:rgba(255,255,255,.7);border-radius:10px;padding:.4rem .7rem;}
+.fdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* BODY MAP */
+.map-sec{background:linear-gradient(135deg,#FFF9E6,#FFFBE8);}
+.map-inner{display:flex;gap:4rem;align-items:center;flex-wrap:wrap;margin-top:2.5rem;}
+.map-doll{flex:0 0 200px;}
+.map-legend{flex:1;min-width:280px;}
+.zone-row{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;border-radius:16px;margin-bottom:.8rem;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06);transition:transform .2s;}
+.zone-row:hover{transform:translateX(6px);}
+.zone-row.safe{border-left:4px solid var(--green);}
+.zone-row.priv{border-left:4px solid var(--red);}
+.ze{font-size:1.8rem;flex-shrink:0;}
+.zt{font-weight:800;font-size:.9rem;}
+.zd{font-size:.8rem;color:#666;line-height:1.5;margin-top:.2rem;}
+.zbadge{display:inline-block;font-size:.65rem;font-weight:800;padding:.2rem .6rem;border-radius:10px;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px;}
+.safe-b{background:#E8FFE8;color:var(--green);}
+.priv-b{background:#FFE8E8;color:var(--red);}
+
+/* HOW */
+.how-sec{background:#F5F0FF;}
+.how-steps{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem;}
+.how-step{display:flex;gap:1.5rem;align-items:flex-start;background:#fff;border-radius:20px;padding:1.5rem 2rem;box-shadow:0 6px 20px rgba(0,0,0,.06);transition:transform .2s;}
+.how-step:hover{transform:translateX(6px);}
+.snum{width:50px;height:50px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.4rem;color:#fff;}
+.semoji{font-size:1.8rem;flex-shrink:0;}
+.stitle{font-weight:800;font-size:1rem;margin-bottom:.3rem;}
+.sdesc{font-size:.85rem;color:#666;line-height:1.5;}
+.sbadge{display:inline-block;font-size:.7rem;font-weight:800;padding:.2rem .7rem;border-radius:10px;margin-top:.5rem;text-transform:uppercase;}
+
+/* SDG */
+.sdg-sec{background:linear-gradient(135deg,#E8F8FF,#F0FFE8);}
+.sdg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem;margin-top:2.5rem;}
+.sdg-card{border-radius:20px;padding:1.5rem 1rem;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.08);transition:transform .2s;cursor:default;}
+.sdg-card:hover{transform:scale(1.08) rotate(-2deg);}
+.sdg-num{font-family:'Fredoka One',cursive;font-size:3rem;line-height:1;}
+.sdg-name{font-size:.7rem;font-weight:800;margin-top:.4rem;line-height:1.3;}
+.s5{background:linear-gradient(135deg,#FFE5E0,#FFD0C8);color:#C0392B;}
+.s4{background:linear-gradient(135deg,#FFF3CC,#FFE580);color:#B7770D;}
+.s3{background:linear-gradient(135deg,#D4EDDA,#A8D5B5);color:#1E8449;}
+.s16{background:linear-gradient(135deg,#CCE5FF,#99CAFF);color:#1A5276;}
+.s10{background:linear-gradient(135deg,#EDD4F5,#DCA8F0);color:#6C3483;}
+.sdg-desc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+.sdg-dc{background:#fff;border-radius:16px;padding:1.2rem 1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.sdg-dn{font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:.3rem;}
+.sdg-dd{font-size:.8rem;color:#555;line-height:1.5;font-weight:600;}
+
+/* IMPACT */
+.impact-sec{background:var(--dark);}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;}
+.imp-card{border-radius:20px;padding:2rem 1.5rem;text-align:center;transition:transform .2s;}
+.imp-card:hover{transform:translateY(-6px);}
+.imp-card:nth-child(1){background:rgba(255,71,87,.15);border:2px solid rgba(255,71,87,.3);}
+.imp-card:nth-child(2){background:rgba(77,150,255,.15);border:2px solid rgba(77,150,255,.3);}
+.imp-card:nth-child(3){background:rgba(107,203,119,.15);border:2px solid rgba(107,203,119,.3);}
+.imp-card:nth-child(4){background:rgba(255,217,61,.15);border:2px solid rgba(255,217,61,.3);}
+.imp-num{font-family:'Fredoka One',cursive;font-size:3rem;}
+.imp-card:nth-child(1) .imp-num{color:var(--red);}
+.imp-card:nth-child(2) .imp-num{color:var(--blue);}
+.imp-card:nth-child(3) .imp-num{color:var(--green);}
+.imp-card:nth-child(4) .imp-num{color:var(--yellow);}
+.imp-label{font-size:.75rem;font-weight:800;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-top:.3rem;}
+.imp-desc{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:.5rem;line-height:1.5;font-weight:600;}
+
+/* TEAM */
+.team-sec{background:linear-gradient(135deg,#FFF5F0,#F5F0FF);}
+.team-card{background:#fff;border-radius:28px;padding:2.5rem 3rem;box-shadow:0 12px 40px rgba(0,0,0,.08);margin-top:2.5rem;display:flex;gap:2.5rem;align-items:center;border:3px solid var(--yellow);}
+.t-avatar{width:110px;height:110px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:2.5rem;color:#fff;box-shadow:0 8px 24px rgba(255,71,87,.35);}
+.t-name{font-family:'Fredoka One',cursive;font-size:2rem;}
+.t-role{font-size:.85rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin:.3rem 0 .8rem;}
+.t-bio{font-size:.9rem;color:#555;line-height:1.7;font-weight:600;max-width:580px;}
+.t-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;}
+.ttag{font-size:.75rem;font-weight:800;padding:.3rem .9rem;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* CTA */
+.cta-sec{padding:6rem 2rem;text-align:center;background:linear-gradient(135deg,var(--red),var(--orange),var(--pink));position:relative;overflow:hidden;}
+.cta-inner{position:relative;z-index:1;}
+.cta-title{font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,4rem);color:#fff;margin-bottom:1rem;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
+.cta-sub{font-size:1.1rem;color:rgba(255,255,255,.85);max-width:500px;margin:0 auto 2.5rem;font-weight:600;line-height:1.6;}
+.childline-box{display:inline-flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);border-radius:20px;padding:1.2rem 3rem;margin-top:2rem;backdrop-filter:blur(10px);}
+.cl-label{font-size:.75rem;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:2px;}
+.cl-num{font-family:'Fredoka One',cursive;font-size:3.5rem;color:#fff;line-height:1;text-shadow:2px 2px 0 rgba(0,0,0,.15);}
+.cl-sub{font-size:.8rem;color:rgba(255,255,255,.7);font-weight:600;margin-top:.2rem;}
+
+footer{background:var(--dark);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-logo{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--yellow);}
+.f-note{font-size:.75rem;color:rgba(255,255,255,.35);font-weight:600;}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .comp-grid,.prob-grid{grid-template-columns:1fr;}
+  .sdg-grid{grid-template-columns:repeat(3,1fr);}
+  .impact-grid{grid-template-columns:repeat(2,1fr);}
+  .map-inner{flex-direction:column;}
+  .team-card{flex-direction:column;text-align:center;padding:2rem;}
+  .t-tags{justify-content:center;}
+  .hero-row{flex-direction:column;}
+  .stats-strip{gap:2rem;padding:2rem 1rem;}
+  .sdg-desc-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="shapes-bg">
+  <div class="shape" style="width:400px;height:400px;background:var(--yellow);top:-100px;left:-100px;animation-delay:0s;"></div>
+  <div class="shape" style="width:300px;height:300px;background:var(--blue);top:30%;right:-80px;animation-delay:2s;"></div>
+  <div class="shape" style="width:250px;height:250px;background:var(--green);bottom:20%;left:5%;animation-delay:4s;"></div>
+  <div class="shape" style="width:200px;height:200px;background:var(--pink);bottom:10%;right:10%;animation-delay:1s;"></div>
+</div>
+
+<nav>
+  <div class="nav-logo">H<span>O</span>PE</div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#bodymap">Body Map</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#sdg">SDGs</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">📞 CHILDLINE 1098</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="star" style="top:10%;left:8%;animation-delay:0s;">⭐</span>
+  <span class="star" style="top:15%;right:10%;animation-delay:.5s;">🌟</span>
+  <span class="star" style="top:60%;left:5%;animation-delay:1s;">✨</span>
+  <span class="star" style="top:70%;right:8%;animation-delay:1.5s;">⭐</span>
+  <span class="star" style="top:30%;left:3%;animation-delay:2s;">💫</span>
+  <span class="star" style="top:85%;left:20%;animation-delay:.8s;">✨</span>
+  <span class="star" style="top:20%;right:3%;animation-delay:2.5s;">🌟</span>
+
+  <div class="hero-badge">🇮🇳 Self Awareness Initiative — India</div>
+  <h1><span class="h">H</span><span class="o">O</span><span class="p">P</span><span class="e">E</span></h1>
+  <div class="hero-full">Healing through Open, Protective Education</div>
+  <p class="hero-tagline">Teaching girls in tribal, hilly, and rural India the difference between good touch and bad touch — through a doll that physically fights back.</p>
+
+  <div class="hero-row">
+    <div>
+      <div class="msg-bubble safe">
+        <div class="bubble-icon">🟢</div>
+        <div class="bubble-title">Good Touch</div>
+        <div class="bubble-text">A hug from mum, a pat on the head from a teacher — touches that make you feel safe and loved.</div>
+      </div>
+      <div class="msg-bubble danger">
+        <div class="bubble-icon">🔴</div>
+        <div class="bubble-title">Bad Touch</div>
+        <div class="bubble-text">Nobody should touch your private parts. If they do — say NO loudly and tell a trusted adult.</div>
+      </div>
+    </div>
+
+    <svg viewBox="0 0 160 340" width="160" style="filter:drop-shadow(0 10px 30px rgba(0,0,0,.1));">
+      <circle cx="80" cy="36" r="30" fill="#FFDAB9" stroke="#FFB347" stroke-width="1.5"/>
+      <ellipse cx="80" cy="12" rx="28" ry="10" fill="#4A2C0A"/>
+      <ellipse cx="55" cy="22" rx="8" ry="14" fill="#4A2C0A"/>
+      <ellipse cx="105" cy="22" rx="8" ry="14" fill="#4A2C0A"/>
+      <circle cx="70" cy="32" r="4" fill="#2C1810"/><circle cx="90" cy="32" r="4" fill="#2C1810"/>
+      <circle cx="71.5" cy="30.5" r="1.5" fill="#fff"/><circle cx="91.5" cy="30.5" r="1.5" fill="#fff"/>
+      <path d="M70 45 Q80 54 90 45" stroke="#E57373" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="62" cy="42" rx="7" ry="5" fill="#FFB3B3" opacity=".6"/>
+      <ellipse cx="98" cy="42" rx="7" ry="5" fill="#FFB3B3" opacity=".6"/>
+      <rect x="72" y="64" width="16" height="12" rx="3" fill="#FFDAB9"/>
+      <path d="M35,76 Q50,70 80,72 Q110,70 125,76 L122,160 Q80,165 38,160 Z" fill="#FF6B9D"/>
+      <circle cx="65" cy="95" r="4" fill="#FFB3D1" opacity=".7"/>
+      <circle cx="80" cy="105" r="4" fill="#FFB3D1" opacity=".7"/>
+      <circle cx="95" cy="95" r="4" fill="#FFB3D1" opacity=".7"/>
+      <path d="M62,76 Q80,88 98,76" fill="#FF4757"/>
+      <rect x="16" y="78" width="22" height="70" rx="10" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <rect x="122" y="78" width="22" height="70" rx="10" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <ellipse cx="27" cy="154" rx="12" ry="8" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <ellipse cx="133" cy="154" rx="12" ry="8" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <path d="M38,158 Q80,165 122,158 L128,230 Q80,238 32,230 Z" fill="#C77DFF"/>
+      <rect x="48" y="228" width="26" height="80" rx="10" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <rect x="86" y="228" width="26" height="80" rx="10" fill="#FFDAB9" stroke="#FFB347" stroke-width="1"/>
+      <ellipse cx="61" cy="312" rx="18" ry="10" fill="#4D96FF"/>
+      <ellipse cx="99" cy="312" rx="18" ry="10" fill="#4D96FF"/>
+      <ellipse cx="80" cy="115" rx="26" ry="22" fill="none" stroke="#FF4757" stroke-width="2.5" stroke-dasharray="5,3"/>
+      <text x="80" y="120" text-anchor="middle" font-size="8" fill="#FF4757" font-family="Nunito,sans-serif" font-weight="800">PRIVATE</text>
+    </svg>
+
+    <div class="right-bubbles">
+      <div class="msg-bubble">
+        <div class="bubble-icon">🪆</div>
+        <div class="bubble-title">Physical Reflex Doll</div>
+        <div class="bubble-text">The arm swings out automatically when a private zone is touched — physically pushing the hand away!</div>
+      </div>
+      <div class="msg-bubble">
+        <div class="bubble-icon">🌍</div>
+        <div class="bubble-title">Tamil · Hindi · English</div>
+        <div class="bubble-text">Speaks in three languages for every child across India's rural and tribal schools.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-btns">
+    <a href="#solution" class="btn btn-red">See How It Works 🚀</a>
+    <a href="#contact" class="btn btn-blue">Support HOPE 💛</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="s-stat"><div class="s-num" style="color:var(--red);">1 in 4</div><div class="s-label">Girls abused in India</div></div>
+  <div class="s-stat"><div class="s-num" style="color:var(--yellow);">3%</div><div class="s-label">Cases ever reported</div></div>
+  <div class="s-stat"><div class="s-num" style="color:var(--green);">5</div><div class="s-label">UN SDGs addressed</div></div>
+  <div class="s-stat"><div class="s-num" style="color:var(--blue);">3</div><div class="s-label">Languages supported</div></div>
+  <div class="s-stat"><div class="s-num" style="color:var(--purple);">1098</div><div class="s-label">CHILDLINE India</div></div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem" class="sec prob-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#FFE8E8;color:var(--red);">The Problem</span>
+      <h2 class="sec-title">Why HOPE must exist 💔</h2>
+      <p class="sec-body">Tamil Nadu saw a 56% spike in child abuse cases in 2024. Girls in tribal villages and hill regions are the most vulnerable — and the most ignored.</p>
+    </div>
+    <div class="prob-grid reveal">
+      <div class="prob-card">
+        <div class="prob-emoji">📚</div>
+        <div class="prob-title">Zero body safety education</div>
+        <div class="prob-desc">In rural India, safety education is considered taboo. Children grow up never learning what a safe or unsafe touch means.</div>
+        <div class="prob-big">80%</div><div class="prob-sub">never tell anyone</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-emoji">👨‍👩‍👧</div>
+        <div class="prob-title">Abusers are known people</div>
+        <div class="prob-desc">Teachers, family members, neighbours — the child's trust is used against them. Only 7% of abuse involves strangers.</div>
+        <div class="prob-big">93%</div><div class="prob-sub">are known to the child</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-emoji">🏔️</div>
+        <div class="prob-title">Alone in fields and hills</div>
+        <div class="prob-desc">Tribal girls work alone in forests and fields — no phone signal, no adult nearby, no way to call for help.</div>
+        <div class="prob-big">53.7%</div><div class="prob-sub">tribal girls report abuse</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-emoji">🤐</div>
+        <div class="prob-title">Shame keeps children silent</div>
+        <div class="prob-desc">Deep cultural stigma means even parents don't report. Only 3% of all child abuse cases are ever reported to police.</div>
+        <div class="prob-big">3%</div><div class="prob-sub">cases ever reach police</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution" class="sec sol-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#E8F0FF;color:var(--blue);">The Solution</span>
+      <h2 class="sec-title">Three components. One ecosystem. 🌟</h2>
+      <p class="sec-body">HOPE doesn't just teach — it physically reacts, educates, and protects even when no adult is present.</p>
+    </div>
+    <div class="comp-grid reveal">
+      <div class="comp-card c-red">
+        <span class="comp-icon">🪆</span>
+        <div class="comp-name">HOPE Doll</div>
+        <div class="comp-sub">Physical Reflex Prototype</div>
+        <div class="comp-desc">A soft fabric doll with embedded sensors. Touch a private zone — the arm swings out automatically shouting "NO NO!"</div>
+        <div class="comp-feats">
+          <div class="feat"><div class="fdot" style="background:var(--red);"></div>Arm swings out in 0.1 seconds</div>
+          <div class="feat"><div class="fdot" style="background:var(--red);"></div>Shouts NO in Tamil/Hindi/English</div>
+          <div class="feat"><div class="fdot" style="background:var(--red);"></div>Red LED strobes on private touch</div>
+          <div class="feat"><div class="fdot" style="background:var(--red);"></div>Bluetooth links to HOPE app</div>
+        </div>
+      </div>
+      <div class="comp-card c-blue">
+        <span class="comp-icon">📱</span>
+        <div class="comp-name">HOPE App</div>
+        <div class="comp-sub">Free Offline Web App</div>
+        <div class="comp-desc">A free app on any school tablet — fully offline. Body map, lessons, quiz, and CHILDLINE help screen all built in.</div>
+        <div class="comp-feats">
+          <div class="feat"><div class="fdot" style="background:var(--blue);"></div>Tamil, Hindi, English support</div>
+          <div class="feat"><div class="fdot" style="background:var(--blue);"></div>Interactive body map + audio</div>
+          <div class="feat"><div class="fdot" style="background:var(--blue);"></div>4-question learning quiz</div>
+          <div class="feat"><div class="fdot" style="background:var(--blue);"></div>Parent & teacher guide</div>
+        </div>
+      </div>
+      <div class="comp-card c-green">
+        <span class="comp-icon">📡</span>
+        <div class="comp-name">HOPE Patch</div>
+        <div class="comp-sub">Wearable GPS Safety Patch</div>
+        <div class="comp-desc">A small sticker patch on the school uniform. Double-press sends GPS location. In zero-signal hills — activates 110dB alarm.</div>
+        <div class="comp-feats">
+          <div class="feat"><div class="fdot" style="background:var(--green);"></div>GPS + SMS to 3 trusted contacts</div>
+          <div class="feat"><div class="fdot" style="background:var(--green);"></div>110dB alarm — no signal needed</div>
+          <div class="feat"><div class="fdot" style="background:var(--green);"></div>Works in hilly zero-signal areas</div>
+          <div class="feat"><div class="fdot" style="background:var(--green);"></div>Iron-on school uniform patch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY MAP -->
+<section id="bodymap" class="sec map-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#FFF3CC;color:#B7770D;">Body Safety Map</span>
+      <h2 class="sec-title">Safe zones & private zones 🗺️</h2>
+      <p class="sec-body">Every child learns that their body belongs to them — and exactly which zones are private and must always be protected.</p>
+    </div>
+    <div class="map-inner reveal">
+      <div class="map-doll">
+        <svg viewBox="0 0 160 340" width="200">
+          <circle cx="80" cy="36" r="30" fill="#FFDAB9" stroke="#6BCB77" stroke-width="3" stroke-dasharray="5,3"/>
+          <ellipse cx="80" cy="12" rx="28" ry="10" fill="#4A2C0A"/>
+          <ellipse cx="55" cy="22" rx="8" ry="14" fill="#4A2C0A"/>
+          <ellipse cx="105" cy="22" rx="8" ry="14" fill="#4A2C0A"/>
+          <circle cx="70" cy="32" r="4" fill="#2C1810"/><circle cx="90" cy="32" r="4" fill="#2C1810"/>
+          <circle cx="71.5" cy="30.5" r="1.5" fill="#fff"/><circle cx="91.5" cy="30.5" r="1.5" fill="#fff"/>
+          <path d="M70 45 Q80 54 90 45" stroke="#E57373" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="62" cy="42" rx="7" ry="5" fill="#FFB3B3" opacity=".6"/>
+          <ellipse cx="98" cy="42" rx="7" ry="5" fill="#FFB3B3" opacity=".6"/>
+          <rect x="72" y="64" width="16" height="12" rx="3" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <path d="M35,76 Q50,70 80,72 Q110,70 125,76 L122,160 Q80,165 38,160 Z" fill="#FF6B9D" stroke="#FF4757" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <circle cx="65" cy="95" r="4" fill="#FFB3D1" opacity=".7"/>
+          <circle cx="80" cy="105" r="4" fill="#FFB3D1" opacity=".7"/>
+          <circle cx="95" cy="95" r="4" fill="#FFB3D1" opacity=".7"/>
+          <path d="M62,76 Q80,88 98,76" fill="#FF4757"/>
+          <rect x="16" y="78" width="22" height="70" rx="10" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <rect x="122" y="78" width="22" height="70" rx="10" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <ellipse cx="27" cy="154" rx="12" ry="8" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <ellipse cx="133" cy="154" rx="12" ry="8" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <path d="M38,158 Q80,165 122,158 L128,230 Q80,238 32,230 Z" fill="#FF4757" stroke="#FF4757" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <rect x="48" y="228" width="26" height="80" rx="10" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <rect x="86" y="228" width="26" height="80" rx="10" fill="#FFDAB9" stroke="#6BCB77" stroke-width="1.5"/>
+          <ellipse cx="61" cy="312" rx="18" ry="10" fill="#4D96FF"/>
+          <ellipse cx="99" cy="312" rx="18" ry="10" fill="#4D96FF"/>
+          <text x="80" y="117" text-anchor="middle" font-size="7" fill="#FF4757" font-family="Nunito,sans-serif" font-weight="800">PRIVATE</text>
+          <text x="80" y="200" text-anchor="middle" font-size="7" fill="#FF4757" font-family="Nunito,sans-serif" font-weight="800">PRIVATE</text>
+        </svg>
+      </div>
+      <div class="map-legend">
+        <div class="zone-row safe"><div class="ze">😊</div><div><div class="zt">Head & Face</div><div class="zd">A gentle pat or head rub from a parent or teacher is a warm, kind touch.</div><span class="zbadge safe-b">Safe zone</span></div></div>
+        <div class="zone-row safe"><div class="ze">🤝</div><div><div class="zt">Arms & Hands</div><div class="zd">Handshakes, high-fives, and hugs from trusted people are friendly safe touches.</div><span class="zbadge safe-b">Safe zone</span></div></div>
+        <div class="zone-row priv"><div class="ze">🚫</div><div><div class="zt">Chest (Private)</div><div class="zd">This is private. Only a doctor — with a parent present — may touch here for health reasons.</div><span class="zbadge priv-b">Private zone</span></div></div>
+        <div class="zone-row priv"><div class="ze">🛑</div><div><div class="zt">Lower Private Area</div><div class="zd">No one should ever touch here. Say NO loudly and tell a trusted adult RIGHT AWAY.</div><span class="zbadge priv-b">Private zone</span></div></div>
+        <div class="zone-row safe"><div class="ze">🩺</div><div><div class="zt">Legs & Feet</div><div class="zd">A doctor may check for health reasons. Always okay to say NO if it feels wrong.</div><span class="zbadge safe-b">Safe zone</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="sec how-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#EDD4F5;color:var(--purple);">How It Works</span>
+      <h2 class="sec-title">The reflex in action ⚡</h2>
+      <p class="sec-body">When a private zone is touched on the HOPE doll, a chain of automatic responses fires in under a second.</p>
+    </div>
+    <div class="how-steps reveal">
+      <div class="how-step"><div class="snum" style="background:var(--red);">1</div><div class="semoji">👆</div><div><div class="stitle">Touch detected on private zone</div><div class="sdesc">The MPR121 capacitive sensor pad in the doll's fabric detects a touch on the private area instantly.</div><span class="sbadge" style="background:#FFE8E8;color:var(--red);">Sensor fires</span></div></div>
+      <div class="how-step"><div class="snum" style="background:var(--orange);">2</div><div class="semoji">⚡</div><div><div class="stitle">Arduino brain responds instantly</div><div class="sdesc">Zero delay — the Arduino Nano identifies this as a private zone and triggers all responses simultaneously.</div><span class="sbadge" style="background:#FFF0E0;color:var(--orange);">0.1 seconds</span></div></div>
+      <div class="how-step"><div class="snum" style="background:var(--purple);">3</div><div class="semoji">💪</div><div><div class="stitle">Doll's arm swings out — physically!</div><div class="sdesc">The SG90 servo motor rotates 90 degrees in 0.1 seconds. The doll's arm physically sweeps outward, pushing the hand away.</div><span class="sbadge" style="background:#EDD4F5;color:var(--purple);">Physical reflex</span></div></div>
+      <div class="how-step"><div class="snum" style="background:var(--blue);">4</div><div class="semoji">🔊</div><div><div class="stitle">Voice shouts "NO NO! Don't touch!"</div><div class="sdesc">DFPlayer plays a pre-recorded voice at maximum volume in Tamil, Hindi, or English. Red LED strobes three times.</div><span class="sbadge" style="background:#E8F0FF;color:var(--blue);">Audio + visual alert</span></div></div>
+      <div class="how-step"><div class="snum" style="background:var(--green);">5</div><div class="semoji">📱</div><div><div class="stitle">HOPE app opens help screen</div><div class="sdesc">Bluetooth alert sends zone ID to the app — which immediately opens the Help screen with CHILDLINE 1098.</div><span class="sbadge" style="background:#E8FFE8;color:var(--green);">Help shown instantly</span></div></div>
+      <div class="how-step"><div class="snum" style="background:var(--teal);">6</div><div class="semoji">🔄</div><div><div class="stitle">Arm resets. Lesson learned.</div><div class="sdesc">After 3 seconds, the servo returns to resting position. The child learns clearly, memorably, and safely.</div><span class="sbadge" style="background:#E0F8F6;color:var(--teal);">System resets</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SDG -->
+<section id="sdg" class="sec sdg-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#D4EDDA;color:var(--green);">UN SDGs</span>
+      <h2 class="sec-title">5 Global Goals. One Project. 🌍</h2>
+      <p class="sec-body">HOPE directly contributes to five United Nations Sustainable Development Goals targeting the most off-track goals in India.</p>
+    </div>
+    <div class="sdg-grid reveal">
+      <div class="sdg-card s5"><div class="sdg-num">5</div><div class="sdg-name">Gender Equality</div></div>
+      <div class="sdg-card s4"><div class="sdg-num">4</div><div class="sdg-name">Quality Education</div></div>
+      <div class="sdg-card s3"><div class="sdg-num">3</div><div class="sdg-name">Good Health & Well-Being</div></div>
+      <div class="sdg-card s16"><div class="sdg-num">16</div><div class="sdg-name">Peace, Justice & Institutions</div></div>
+      <div class="sdg-card s10"><div class="sdg-num">10</div><div class="sdg-name">Reduced Inequalities</div></div>
+    </div>
+    <div class="sdg-desc-grid reveal">
+      <div class="sdg-dc"><div class="sdg-dn" style="color:#C0392B;">SDG 5 — Gender Equality</div><div class="sdg-dd">HOPE teaches girls their right to bodily safety, empowers them to say NO, and provides a physical tool that reinforces that message in every session.</div></div>
+      <div class="sdg-dc"><div class="sdg-dn" style="color:#B7770D;">SDG 4 — Quality Education</div><div class="sdg-dd">HOPE delivers safety education to children in tribal and rural government schools where absolutely no such curriculum currently exists.</div></div>
+      <div class="sdg-dc"><div class="sdg-dn" style="color:#1E8449;">SDG 3 — Good Health</div><div class="sdg-dd">Early education and fast emergency response through the safety patch directly improve health and well-being outcomes for children.</div></div>
+      <div class="sdg-dc"><div class="sdg-dn" style="color:#1A5276;">SDG 16 — Justice</div><div class="sdg-dd">HOPE raises awareness of POCSO rights and makes CHILDLINE 1098 known to every child — bridging the gap between law and ground reality.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="sec impact-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:rgba(255,217,61,.2);color:var(--yellow);">Projected Impact</span>
+      <h2 class="sec-title" style="color:#fff;">What HOPE will achieve 🎯</h2>
+    </div>
+    <div class="impact-grid reveal">
+      <div class="imp-card"><div class="imp-num">3</div><div class="imp-label">Pilot Schools</div><div class="imp-desc">Tribal, hilly & rural government schools across Tamil Nadu</div></div>
+      <div class="imp-card"><div class="imp-num">300+</div><div class="imp-label">Girls Reached</div><div class="imp-desc">Directly educated on body safety in Phase 1 pilot</div></div>
+      <div class="imp-card"><div class="imp-num">50</div><div class="imp-label">Families</div><div class="imp-desc">Receiving awareness kits in their local language</div></div>
+      <div class="imp-card"><div class="imp-num">1098</div><div class="imp-label">CHILDLINE</div><div class="imp-desc">Known by every child & parent in our target communities</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="sec team-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <span class="sec-tag" style="background:#FFE8E8;color:var(--red);">The Team</span>
+      <h2 class="sec-title">Built by an engineer who cares 💛</h2>
+    </div>
+    <div class="team-card reveal">
+      <div class="t-avatar">RS</div>
+      <div>
+        <div class="t-name">Risalath S</div>
+        <div class="t-role">3rd Year — Mechanical & Automation Engineering | Unnat Bharat Abhiyaan</div>
+        <div class="t-bio">Risalath conceived Project HOPE from a deep frustration with the silence around child safety in rural India. As a Mechanical and Automation Engineering student and active member of Unnat Bharat Abhiyaan, he combines embedded systems design, civic thinking, and genuine commitment to protect the most vulnerable girls in India's forgotten communities.</div>
+        <div class="t-tags">
+          <span class="ttag" style="background:#FFE8E8;color:var(--red);">Arduino & Embedded Systems</span>
+          <span class="ttag" style="background:#E8F0FF;color:var(--blue);">Unnat Bharat Abhiyaan</span>
+          <span class="ttag" style="background:#E8FFE8;color:var(--green);">Child Safety</span>
+          <span class="ttag" style="background:#EDD4F5;color:var(--purple);">Rural Innovation</span>
+          <span class="ttag" style="background:#FFF3CC;color:#B7770D;">Tamil Nadu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-sec">
+  <div class="cta-inner">
+    <h2 class="cta-title">Every girl deserves to feel safe. 💛</h2>
+    <p class="cta-sub">Help us bring HOPE to every tribal village, every hilly school, every rural child who needs it.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:risalath@hopeindia.org" class="btn" style="background:#fff;color:var(--red);box-shadow:0 6px 20px rgba(0,0,0,.15);">📧 Contact the Team</a>
+    </div>
+    <div class="childline-box">
+      <div class="cl-label">Child helpline — free, 24/7</div>
+      <div class="cl-num">1098</div>
+      <div class="cl-sub">CHILDLINE India — confidential support for every child</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">HOPE 🌟</div>
+  <div class="f-note">Self Awareness Initiative — Risalath S, Mechanical & Automation Engineering, 2025</div>
+  <div style="font-size:.8rem;color:rgba(255,255,255,.4);font-weight:700;">Unnat Bharat Abhiyaan</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
